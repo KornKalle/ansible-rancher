@@ -1,0 +1,10 @@
+- name: Add kubernetes repository
+  template:
+    src: templates/kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+
+- name: Install kubectl
+  dnf:
+    update_cache: yes
+    name: kubectl
+    state: latest

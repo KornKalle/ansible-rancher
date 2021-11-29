@@ -1,0 +1,20 @@
+- name: Add User rancher
+  user:
+    name: "{{ k8s_user_name }}"
+    shell: /bin/zsh
+    groups: docker
+    append: yes
+
+- name: Copy .zshrc for "{{ k8s_user_name }}"
+  copy:
+    src: templates/zshrc.j2
+    dest: /home/rancher/.zshrc
+    owner: "{{ k8s_user_name }}"
+    group: "{{ k8s_user_name }}"
+    mode: '0600'
+    backup: yes
+
+  authorized_key:
+    user: "{{ k8s_user_name }}"
+    exclusive: no
+    key: "{{ k8s_default_ssh_key }}"
